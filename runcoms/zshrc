@@ -5,45 +5,85 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
-source ~/.iterm2_shell_integration.`basename $SHELL`
-
 # Source Prezto.
-[ -s "${PREZTOINIT=${ZDOTDIR:-$HOME}/.zprezto/init.zsh}" ] && . "$PREZTOINIT"
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
 
-# Customize to your needs...
 
 bindkey -e
 bindkey '^[[1;9C' forward-word
 bindkey '^[[1;9D' backward-word
 
-setopt extended_glob
+# setopt extended_glob
 
-# dotfiles | while read line; do eval "$line"; done
-# source <($(echo $(dotfiles)))
-OUTFILE=$(mktemp -t dotfiles)
-dotfiles >! $OUTFILE && . $OUTFILE
-#|| rm $OUTFILE
-
-mkfifo
-# zstyle ':completion:*' verbose yes
+# export PATH=$PATH:/usr/local/opt/go/libexec/bin
 
 [ -n "$SSH_CLIENT" ] && PS1="[ssh] $PS1"
 
-# determin platform
-[[ $(sw_vers -productName) == "iPhone OS" ]] && export PLATFORM=ios || export PLATFORM=mac
+fpath=(/usr/local/share/zsh-completions $fpath)
 
-# ==> Caveats Add the following to your zshrc to access the online help:
-  unalias run-help
-  autoload run-help
-  HELPDIR=/usr/local/share/zsh/help
-  
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# determin platform
+[[ $(uname -n) == 'raspberrypi' ]] && PLATFORM=pi || \
+[[ $(uname -n) =~ inux ]] && PLATFORM=linux || \
+[[ $(sw_vers -productName) == "iPhone OS" ]] && PLATFORM=ios || PLATFORM=mac
+
+export PLATFORM
+
+if [[ $PLATFORM =~ mac ]]
+then
+	# export GOPATH=$HOME/dev/go
+	# export GOROOT=`go env GOROOT`
+	export PATH=$PATH:/usr/local/go/bin
+
+	# Customize to your needs...
+	[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+	: '
+	OUTFILE=$(mktemp -t dotfiles)
+	dotfiles >! $OUTFILE && . $OUTFILE
+	'
+
+	. <( /xbin/dotfiles )
+
+
+	# export PATH=$PATH:/esptools/esp-open-sdk/xtensa-lx106-elf/bin
+	export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+	export NVM_DIR="/sd/localadmin/.nvm"
+	[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+	test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+
+	# ==> Caveats Add the following to your zshrc to access the online help:
+	unalias run-help
+	autoload run-help
+	HELPDIR=/usr/local/share/zsh/help
+
+
+	export PATH=$PATH:${HOME}/Library/Arduino15/packages/esp8266/tools/xtensa-lx106-elf-gcc/*/bin
+fi 
+
+
+
+
+# export AEDebugSends=YES
+# export AEDebugReceives=YES
+
+# dotfiles | while read line; do eval "$line"; done
+# source <($(echo $(dotfiles)))
+#|| rm $OUTFILE
+
+# mkfifo
+# zstyle ':completion:*' verbose yes
+
+
+
+# npm () { /usr/local/bin/npm $@ -d; }
 
 # compdef ping6=ping
 # compdef _gnu_generic curl emacs emacsclient file head mv paste
 # compdef _gnu_generic tail touch scrot shred watch wc zsh
 # compdef _gnu_generic io _ObjC_Tool file head mv tail
-
 
 # source "$ZDOTDIR/../loader/loader.zsh"
 #source global shit
@@ -68,15 +108,11 @@ mkfifo
 # 
 # export CAPP_BUILD="/cap/cappuccino/Build"
 
-# source /Users/localadmin/.iterm2_shell_integration.zsh
-
 
 : ' PLATFORM LOADER
 '
 # if [[ -z $SSHRC_LOADED ]]; then
  # unset SSHRC_LOADED
-  
-
   # loader_addpath "${SSHHOME:-$HOME/dotfiles}/.sshrc.d"
   
   # SOURCEFROM="${SSHHOME:-$HOME}/.sshrc.d/profile.global"
@@ -84,7 +120,6 @@ mkfifo
   # [[ -f  ]] && source "$SOURCEFROM" || SOURCEFROM=
   # source based on platform
   # [[ -f PLATFORM_SCRIPT="$SOURCEFROM/,,/profile.$PLATFORM" ]] && source "$PLATFORM_SCRIPT" || PLATFORM_SCRIPT="N/A"
-
 
   echo "SOURCEFROM:$FG[blue]${SOURCEFROM:-N/A}$FX[none] " \
           "sshhome:$FG[yellow]${SSHHOME:-UNSET!}$FX[none] " \
@@ -165,7 +200,7 @@ sourcing(){
 # # set options to turn on tracing and expansion of commands contained in the prompt
 # setopt xtrace prompt_subst
 # ##################################################
-
+ 
 
 # Path to your oh-my-zsh configuration.
 # ZSH=$HOME/.oh-my-zsh
@@ -243,10 +278,6 @@ sourcing(){
 # . $HOME/dotfiles/shell/sourcery.sh
 # export PATH="/usr/local/narwhal/bin:$PATH"
 
-
-
-
-
 ### Added by the Heroku Toolbelt
 # export PATH="/usr/local/heroku/bin:$PATH"
 
@@ -262,10 +293,35 @@ sourcing(){
 # added by travis gem
 # [ -f /Users/localadmin/.travis/travis.sh ] && source /Users/localadmin/.travis/travis.sh
 
-
-
 # ########################################
 # # turn off tracing
 # unsetopt xtrace
 # # restore stderr to the value saved in FD 3
 # exec 2>&3 3>&-
+
+
+
+# source /usr/local/Cellar/antigen/1/share/antigen.zsh
+
+## Load the oh-my-zsh's library.
+# antigen use oh-my-zsh
+
+## Bundles from the default repo (robbyrussell's oh-my-zsh).
+#antigen bundle git
+## antigen bundle heroku
+## antigen bundle pip
+## antigen bundle lein
+#antigen bundle command-not-found
+
+## Syntax highlighting bundle.
+#antigen bundle zsh-users/zsh-syntax-highlighting
+
+## antigen bundle Tarrasch/zsh-autoenv
+
+## Load the theme.
+#antigen theme pure
+## robbyrussell
+## antigen theme funky
+
+## Tell antigen that you're done.
+# antigen apply
