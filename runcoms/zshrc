@@ -18,13 +18,13 @@ bindkey '^[[1;9D' backward-word
 
 setopt extended_glob
 
-declare -a SRCES
-for SRC in ~/dotfiles/(*.sh|*.zsh); { SRCES+=`basename $SRC` && source $SRC }
+declare -a SRCES FILES
+for SRC in ~/dotfiles/(*.sh|*.zsh); { source $SRC && SRCES+=`basename $SRC` }
 
 printf "Sourced from $SRCES!"
 
 # . $HOME/dotfiles/shell/sourcery.sh
 #export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export NARWHAL_ENGINE=jsc
-export PATH="/usr/local/narwhal/bin:$PATH"
-export CAPP_BUILD="/cap/cappuccino/Build"
+# export PATH="/usr/local/narwhal/bin:$PATH"
+export CAPP_BUILD="/cap/cappuccino/Build"source /Users/localadmin/.iterm2_shell_integration.zsh
