@@ -4,6 +4,29 @@
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
+declare -a SOURCES
+DEBUG=1
+alias PATHCT='echo $PATH | tr ':' '\n' | wc -l'
+
+sourcing(){ 
+
+  # /bin/echo -n "sourcing $@"  | sed 's:/Users/localadmin:~:g'
+  SOURCES+="$@"
+  [[ $DEBUG ]] && echo "$(basename $@)"
+  
+  [[ -L "$@" ]]; { 
+    local link="$(/usr/bin/readlink $@)"
+    SOURCES+="$(echo \[$(/xbin/color cyan)$link$(/xbin/color off)])"
+    [[ $DEBUG ]] && echo "$link"
+  }
+  . "$@"
+
+  echo "path after $(basename $@) ... $(/xbin/color magenta)`PATHCT`$(/xbin/color off)"
+  typeset -U PATH
+  # export SOURCES
+}
+
+alias source=sourcing
 
 # Ensure that a non-login, non-interactive shell has a defined environment.
 if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
