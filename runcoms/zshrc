@@ -19,7 +19,7 @@ bindkey '^[[1;9D' backward-word
 setopt extended_glob
 
 declare -a SRCES FILES
-for SRC in ~/dotfiles/(*.sh|*.zsh); { source $SRC && SRCES+=`basename $SRC` }
+for SRC in "${DOTFILES}"/alex/(*.sh|*.zsh); { source $SRC && SRCES+=`basename $SRC` }
 
 printf "Sourced from $SRCES!"
 
