@@ -12,6 +12,11 @@ fi
 
 
 # system-wide environment settings for zsh(1)
+if [ -x /usr/libexec/path_helper ]; then
+  eval `/usr/libexec/path_helper -s`
+fi
+
+
 # Source this file in your shell to enable stderred for all commands
 
 # if  [[ ! "$LD_PRELOAD" == *libstderred.so* ]]; then
