@@ -27,4 +27,5 @@ printf "Sourced from $SRCES!"
 #export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export NARWHAL_ENGINE=jsc
 # export PATH="/usr/local/narwhal/bin:$PATH"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export CAPP_BUILD="/cap/cappuccino/Build"source /Users/localadmin/.iterm2_shell_integration.zsh
