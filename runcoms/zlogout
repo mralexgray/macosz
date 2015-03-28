@@ -5,6 +5,9 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+# Save directory stack
+dirs -p | savedirs.rb > ~/.dirstack
+
 # Print the message.
 cat <<-EOF
 
