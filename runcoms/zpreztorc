@@ -43,6 +43,7 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
+  'prompt' \
   'history' \
   'directory' \
   'command-not-found' \
@@ -56,10 +57,11 @@ zstyle ':prezto:load' pmodule \
   'syntax-highlighting' \
   'history-substring-search' \
   'prompt' 
+  'git' 
 
   # 'terminal' \
   # 'editor' \
-    #     # 'editor' \
+#     # 'editor' \
 #     # 'history' \
 #     # 'directory' \
 #     # 'spectrum' \
