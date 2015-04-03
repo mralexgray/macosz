@@ -9,6 +9,8 @@
 # General
 #
 
+zstyle ':prezto:module:utility:diff' color 'no'
+
 # Set case-sensitivity for completion, history lookup, etc.
 zstyle ':prezto:*:*' case-sensitive 'no'
 
@@ -41,26 +43,23 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
-  'prompt' \
   'history' \
-  'command-not-found' \
-  'history-substring-search' \
   'directory' \
-  'git' 
+  'command-not-found' \
+  'node' \
+  'homebrew' \
+  'osx' \
+  'rsync' \
+  'ssh' \
+  'directory' \
+  'git' \
+  'syntax-highlighting' \
+  'history-substring-search' \
+  'prompt' 
 
   # 'terminal' \
   # 'editor' \
-  # 
-  
-
-
-  # 'osx' \
-  # 'rsync' \
-  # 'ssh' \
-  # 'syntax-highlighting' \
-
-
-#     # 'editor' \
+    #     # 'editor' \
 #     # 'history' \
 #     # 'directory' \
 #     # 'spectrum' \

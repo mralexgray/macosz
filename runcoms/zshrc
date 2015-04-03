@@ -6,9 +6,19 @@
 #
 
 # Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
+[ -s "${PREZTOINIT=${ZDOTDIR:-$HOME}/.zprezto/init.zsh}" ] && . "$PREZTOINIT"
+
+[ -n "$SSH_CLIENT" ] && PS1="[ssh] $PS1"
+
+# determin platform
+[[ $(sw_vers -productName) == "iPhone OS" ]] && export PLATFORM=ios || export PLATFORM=mac
+source "$ZDOTDIR/../loader/loader.zsh"
+#source global shit
+# loader_addpath "${SSHHOME:-$HOME}/.sshrc.d"
+loader_addpath "$ZDOTDIR/../profile"
+include "profile.global.zsh"
+include "profile.$PLATFORM.zsh"
+
 
 # Customize to your needs...
 
@@ -18,14 +28,51 @@ bindkey '^[[1;9D' backward-word
 
 setopt extended_glob
 
-declare -a SRCES FILES
-for SRC in "${DOTFILES}"/alex/(*.sh|*.zsh); { source $SRC && SRCES+=`basename $SRC` }
+# declare -a SRCES FILES
+# for SRC in "${DOTFILES}"/alex/(*.sh|*.zsh); { source $SRC && SRCES+=`basename $SRC` }
 
-printf "Sourced from $SRCES!"
+# printf "Sourced from $SRCES!"
 
 # . $HOME/dotfiles/shell/sourcery.sh
 #export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-export NARWHAL_ENGINE=jsc
+# export NARWHAL_ENGINE=jsc
 # export PATH="/usr/local/narwhal/bin:$PATH"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export CAPP_BUILD="/cap/cappuccino/Build"source /Users/localadmin/.iterm2_shell_integration.zsh
+export CAPP_BUILD="/cap/cappuccino/Build"
+
+source /Users/localadmin/.iterm2_shell_integration.zsh
+
+
+: ' PLATFORM LOADER
+'
+# if [[ -z $SSHRC_LOADED ]]; then
+ # unset SSHRC_LOADED
+  
+
+  # loader_addpath "${SSHHOME:-$HOME/dotfiles}/.sshrc.d"
+  
+  # SOURCEFROM="${SSHHOME:-$HOME}/.sshrc.d/profile.global"
+  # include SOURCEFROM
+  # [[ -f  ]] && source "$SOURCEFROM" || SOURCEFROM=
+  # source based on platform
+  # [[ -f PLATFORM_SCRIPT="$SOURCEFROM/,,/profile.$PLATFORM" ]] && source "$PLATFORM_SCRIPT" || PLATFORM_SCRIPT="N/A"
+
+
+  echo "SOURCEFROM:$FG[blue]${SOURCEFROM:-N/A}$FX[none] " \
+          "sshhome:$FG[yellow]${SSHHOME:-UNSET!}$FX[none] " \
+         "platform:$FG[red]${PLATFORM:-UNKNOWN}$FX[none] " \
+          "sourced:$FG[green]$PLATFORM_SCRIPT$FX[none] " 
+
+
+  # echo "SOURCEFROM:$(/xbin/color blue)${SOURCEFROM:-N/A}$(/xbin/color off) sshhome:${SSHHOME:-$(/xbin/color yellow)UNSET!$(/xbin/color off)} platform:${PLATFORM:-$(/xbin/color red)UNKNOWN$(/xbin/color off)}"
+
+  # [[ -z "$SSHHOME" ]]  && export LOADFROM="$(dirname $0)" || export LOADFROM="$SSHHOME/.sshrc.d"
+
+  # export -g SSHRC_LOADED=YES
+  
+# else
+  
+#   PARENT_COMMAND="$(ps -o comm= $PPID)"
+#   echo "trying to load twice, called from $PARENT_COMMAND"
+#
+# fi
