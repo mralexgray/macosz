@@ -8,18 +8,6 @@
 # Source Prezto.
 [ -s "${PREZTOINIT=${ZDOTDIR:-$HOME}/.zprezto/init.zsh}" ] && . "$PREZTOINIT"
 
-[ -n "$SSH_CLIENT" ] && PS1="[ssh] $PS1"
-
-# determin platform
-[[ $(sw_vers -productName) == "iPhone OS" ]] && export PLATFORM=ios || export PLATFORM=mac
-source "$ZDOTDIR/../loader/loader.zsh"
-#source global shit
-# loader_addpath "${SSHHOME:-$HOME}/.sshrc.d"
-loader_addpath "$ZDOTDIR/../profile"
-include "profile.global.zsh"
-include "profile.$PLATFORM.zsh"
-
-
 # Customize to your needs...
 
 bindkey -e
@@ -27,6 +15,38 @@ bindkey '^[[1;9C' forward-word
 bindkey '^[[1;9D' backward-word
 
 setopt extended_glob
+
+source <( dotfiles )
+
+zstyle ':completion:*' verbose yes
+
+[ -n "$SSH_CLIENT" ] && PS1="[ssh] $PS1"
+
+# determin platform
+[[ $(sw_vers -productName) == "iPhone OS" ]] && export PLATFORM=ios || export PLATFORM=mac
+
+# ==> Caveats Add the following to your zshrc to access the online help:
+  unalias run-help
+  autoload run-help
+  HELPDIR=/usr/local/share/zsh/help
+  
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+compdef ping6=ping
+compdef _gnu_generic curl emacs emacsclient file head mv paste
+compdef _gnu_generic tail touch scrot shred watch wc zsh
+compdef _gnu_generic io _ObjC_Tool
+
+
+# source "$ZDOTDIR/../loader/loader.zsh"
+#source global shit
+# loader_addpath "${SSHHOME:-$HOME}/.sshrc.d"
+# loader_addpath "$ZDOTDIR/../profile"
+# include "profile.global.zsh"
+# include "profile.$PLATFORM.zsh"
+
+
+
 
 # declare -a SRCES FILES
 # for SRC in "${DOTFILES}"/alex/(*.sh|*.zsh); { source $SRC && SRCES+=`basename $SRC` }
@@ -37,7 +57,8 @@ setopt extended_glob
 #export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 # export NARWHAL_ENGINE=jsc
 # export PATH="/usr/local/narwhal/bin:$PATH"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
 export CAPP_BUILD="/cap/cappuccino/Build"
 
 source /Users/localadmin/.iterm2_shell_integration.zsh
@@ -76,3 +97,56 @@ source /Users/localadmin/.iterm2_shell_integration.zsh
 #   echo "trying to load twice, called from $PARENT_COMMAND"
 #
 # fi
+
+
+
+
+# Defines environment variables.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+# declare -a SOURCES
+# DEBUG=1
+# alias PATHCT='echo $PATH | tr ':' '\n' | wc -l'
+
+sourcing(){ 
+
+  # /bin/echo -n "sourcing $@"  | sed 's:/Users/localadmin:~:g'
+  # SOURCES+="$@"
+  # [[ $DEBUG ]] && echo "$(basename $@)"
+  # [[ -L "$@" ]]; {
+  #   local link="$(/usr/bin/readlink $@)"
+  #   SOURCES+="$(echo \[$(/xbin/color cyan)$link$(/xbin/color off)])"
+  #   [[ $DEBUG ]] && echo "$link"
+  # }
+  # . "$@"
+  # echo "path after $(basename $@) ... $(/xbin/color magenta)`PATHCT`$(/xbin/color off)"
+  # typeset -U PATH
+  # export SOURCES
+}
+
+
+export IPHONE_SIMULATOR_ROOT='/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator8.1.sdk'
+
+
+# # Source this file in your shell to enable stderred for all commands
+# [[ ! "$LD_PRELOAD" == *libstderred.so* ]] && {
+#
+#     [[ -f /usr/lib/libstderred.so ]]   && export LD_PRELOAD="/usr/lib/libstderred.so${LD_PRELOAD:+:$LD_PRELOAD}"\
+# ||  [[ -f /usr/lib64/libstderred.so ]] && export LD_PRELOAD="/usr/lib64/libstderred.so${LD_PRELOAD:+:$LD_PRELOAD}"
+#
+# }
+#
+
+[[ -f ${STDERRRED="/Volumes/2T/ServiceData/git/stderred/build/libstderred.dylib"} ]] &&
+ export DYLD_INSERT_LIBRARIES="$STDERRRED${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
+
+typeset -u DYLD_INSERT_LIBRARIES
+
+# export STDERRED_BLACKLIST="^(bash|test.*)$"
+# ""/absolute/path/to/build/libstderred.dylib${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
+# bold=$(tput bold || tput md)
+# red=$(tput setaf 1)
+# export STDERRED_ESC_CODE=$(echo -e "$bold$red")
+
