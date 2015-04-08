@@ -10,14 +10,17 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+# Customize to your needs...
 
 bindkey -e
 bindkey '^[[1;9C' forward-word
 bindkey '^[[1;9D' backward-word
 
-# setopt extended_glob
+setopt extended_glob
 
-# export PATH=$PATH:/usr/local/opt/go/libexec/bin
+source <( dotfiles )
+
+zstyle ':completion:*' verbose yes
 
 [ -n "$SSH_CLIENT" ] && PS1="[ssh] $PS1"
 
@@ -28,7 +31,12 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 [[ $(uname -n) =~ inux ]] && PLATFORM=linux || \
 [[ $(sw_vers -productName) == "iPhone OS" ]] && PLATFORM=ios || PLATFORM=mac
 
-export PLATFORM
+# ==> Caveats Add the following to your zshrc to access the online help:
+  unalias run-help
+  autoload run-help
+  HELPDIR=/usr/local/share/zsh/help
+  
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if [[ $PLATFORM =~ mac ]]
 then
@@ -181,6 +189,10 @@ sourcing(){
 # }
 #
 
+[[ -f ${STDERRRED="/Volumes/2T/ServiceData/git/stderred/build/libstderred.dylib"} ]] &&
+ export DYLD_INSERT_LIBRARIES="$STDERRRED${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
+
+typeset -u DYLD_INSERT_LIBRARIES
 
 # export STDERRED_BLACKLIST="^(bash|test.*)$"
 # ""/absolute/path/to/build/libstderred.dylib${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
