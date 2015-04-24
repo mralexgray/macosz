@@ -5,6 +5,21 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+dyld_insert() {
+
+  [[ -f "$1" ]] && export DYLD_INSERT_LIBRARIES="$1${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
+  typeset -u DYLD_INSERT_LIBRARIES
+}
+
+# dyld_insert "/Volumes/2T/ServiceData/git/stderred/build/libstderred.dylib"
+# dyld_insert "/usr/local/lib/libRedGreen.dylib"
+
+# export DYLD_PRINT_LIBRARIES=1
+
+# [[ -f ${STDERRRED="/Volumes/2T/ServiceData/git/stderred/build/libstderred.dylib"} ]] &&
+#  export DYLD_INSERT_LIBRARIES="$STDERRRED${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
+
+
 # Ensure that a non-login, non-interactive shell has a defined environment.
 if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"

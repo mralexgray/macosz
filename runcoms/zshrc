@@ -116,6 +116,8 @@ fi
 # 
 # export CAPP_BUILD="/cap/cappuccino/Build"
 
+# source /Users/localadmin/.iterm2_shell_integration.zsh
+
 
 : ' PLATFORM LOADER
 '
@@ -189,10 +191,6 @@ sourcing(){
 # }
 #
 
-[[ -f ${STDERRRED="/Volumes/2T/ServiceData/git/stderred/build/libstderred.dylib"} ]] &&
- export DYLD_INSERT_LIBRARIES="$STDERRRED${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
-
-typeset -u DYLD_INSERT_LIBRARIES
 
 # export STDERRED_BLACKLIST="^(bash|test.*)$"
 # ""/absolute/path/to/build/libstderred.dylib${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
