@@ -57,10 +57,21 @@ zstyle ':prezto:load' pmodule \
   'syntax-highlighting' \
   'history-substring-search' \
   'prompt' \
+  'directory' \
   'git' 
 
   # 'terminal' \
   # 'editor' \
+  # 
+  
+
+
+  # 'osx' \
+  # 'rsync' \
+  # 'ssh' \
+  # 'syntax-highlighting' \
+
+
 #     # 'editor' \
 #     # 'history' \
 #     # 'directory' \
@@ -129,7 +140,7 @@ zstyle ':prezto:load' pmodule \
 #
 
 # Set the key mapping style to 'emacs' or 'vi'.
-zstyle ':prezto:module:editor' key-bindings 'emacs'
+# zstyle ':prezto:module:editor' key-bindings 'emacs'
 
 # Auto convert .... to ../..
 zstyle ':prezto:module:editor' dot-expansion 'yes'
@@ -144,12 +155,12 @@ zstyle ':prezto:module:git:status:ignore' submodules 'dirty'
 # GNU Utility
 
 # Set the command prefix on non-GNU systems.
-# zstyle ':prezto:module:gnu-utility' prefix 'g'
+zstyle ':prezto:module:gnu-utility' prefix 'g'
 
 # History Substring Search
 
 # Set the query found color.
-zstyle ':prezto:module:history-substring-search:color' found 'cyan'
+zstyle ':prezto:module:history-substring-search:color' found 'red'
 
 # Set the query not found color.
 zstyle ':prezto:module:history-substring-search:color' not-found 'magenta'
@@ -171,7 +182,7 @@ zstyle ':prezto:module:history-substring-search:color' not-found 'magenta'
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
-zstyle ':prezto:module:prompt' theme 'pure'
+zstyle ':prezto:module:prompt' theme 'pure' #'agnoster' # 'sorin'
 
 #theme 'bart' yellow green magenta
 
@@ -211,9 +222,9 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
   'main' \
   'brackets' \
   'pattern' \
-  'cursor' 
+  'cursor' \
 # \
-  # 'root'
+  'root'
 
 # Set syntax highlighting styles.
 zstyle ':prezto:module:syntax-highlighting' styles \
