@@ -33,9 +33,9 @@ zstyle ':completion:*' verbose yes
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 compdef ping6=ping
-compdef _gnu_generic curl emacs emacsclient file head mv paste
-compdef _gnu_generic tail touch scrot shred watch wc zsh
-compdef _gnu_generic io _ObjC_Tool
+# compdef _gnu_generic curl emacs emacsclient file head mv paste
+# compdef _gnu_generic tail touch scrot shred watch wc zsh
+# compdef _gnu_generic io _ObjC_Tool file head mv tail
 
 
 # source "$ZDOTDIR/../loader/loader.zsh"
@@ -58,10 +58,10 @@ compdef _gnu_generic io _ObjC_Tool
 # export NARWHAL_ENGINE=jsc
 # export PATH="/usr/local/narwhal/bin:$PATH"
 
+# 
+# export CAPP_BUILD="/cap/cappuccino/Build"
 
-export CAPP_BUILD="/cap/cappuccino/Build"
-
-source /Users/localadmin/.iterm2_shell_integration.zsh
+# source /Users/localadmin/.iterm2_shell_integration.zsh
 
 
 : ' PLATFORM LOADER
@@ -139,10 +139,6 @@ export IPHONE_SIMULATOR_ROOT='/Applications/Xcode.app/Contents/Developer/Platfor
 # }
 #
 
-[[ -f ${STDERRRED="/Volumes/2T/ServiceData/git/stderred/build/libstderred.dylib"} ]] &&
- export DYLD_INSERT_LIBRARIES="$STDERRRED${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
-
-typeset -u DYLD_INSERT_LIBRARIES
 
 # export STDERRED_BLACKLIST="^(bash|test.*)$"
 # ""/absolute/path/to/build/libstderred.dylib${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
