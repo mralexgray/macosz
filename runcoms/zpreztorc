@@ -38,27 +38,31 @@ zstyle ':prezto:*:*' color 'yes'
 # directory is essential
 # history-substring-search must be loaded after syntax-highlighting module
 
-zstyle ':prezto:load' pmodule \
-  'environment' \
-  'spectrum' \
-  'utility' \
-  'completion' \
-  'prompt' \
-  'history' \
-  'directory' \
-  'command-not-found' \
-  'node' \
-  'homebrew' \
-  'osx' \
-  'rsync' \
-  'ssh' \
-  'directory' \
-  'git' \
-  'syntax-highlighting' \
-  'history-substring-search' \
-  'prompt' \
-  'directory' \
-  'git' 
+zstyle ':prezto:load' pmodule 'environment' \
+															'utility' \
+															'spectrum' \
+															'completion' \
+															'history' \
+															'fasd' \
+															'directory' \
+														  'command-not-found' \
+															'rsync' \
+															'alex' \
+															'syntax-highlighting' \
+															'prompt' \
+															'homebrew' \
+														  'osx' \
+															'ssh' \
+															'git' \
+															'tmux' \
+														  'history-substring-search'
+ 
+# 'tmux' \
+# 'node' \
+# 'homebrew' \
+# 'osx' \
+# 'ssh' \
+# 'git' \
 
   # 'terminal' \
   # 'editor' \
@@ -105,7 +109,8 @@ zstyle ':prezto:load' pmodule \
 #  editor
 #  emacs
 #  environment
-#  fasd
+
+ # fasd
 #  git
 #  gnu-utility
 #  gpg
@@ -140,7 +145,7 @@ zstyle ':prezto:load' pmodule \
 #
 
 # Set the key mapping style to 'emacs' or 'vi'.
-# zstyle ':prezto:module:editor' key-bindings 'emacs'
+zstyle ':prezto:module:editor' key-bindings 'emacs'
 
 # Auto convert .... to ../..
 zstyle ':prezto:module:editor' dot-expansion 'yes'
@@ -150,7 +155,7 @@ zstyle ':prezto:module:editor' dot-expansion 'yes'
 #
 
 # Ignore submodules when they are 'dirty', 'untracked', 'all', or 'none'.
-zstyle ':prezto:module:git:status:ignore' submodules 'dirty'
+# zstyle ':prezto:module:git:status:ignore' submodules 'dirty'
 
 # GNU Utility
 
@@ -166,7 +171,7 @@ zstyle ':prezto:module:history-substring-search:color' found 'red'
 zstyle ':prezto:module:history-substring-search:color' not-found 'magenta'
 
 # Set the search globbing flags.
-# zstyle ':prezto:module:history-substring-search' globbing-flags ''
+zstyle ':prezto:module:history-substring-search' globbing-flags ''
 
 #
 # Pacman
@@ -210,7 +215,8 @@ zstyle ':prezto:module:prompt' theme 'pure' #'agnoster' # 'sorin'
 #
 
 # Set the SSH identities to load into the agent.
-# zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'id_rsa2' 'id_github'
+# zstyle ':prezto:module:ssh:load' identities 'id_rsa'
+# 'id_rsa2' 'id_github'
 
 #
 # Syntax Highlighting
@@ -223,7 +229,6 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
   'brackets' \
   'pattern' \
   'cursor' \
-# \
   'root'
 
 # Set syntax highlighting styles.
@@ -237,23 +242,23 @@ zstyle ':prezto:module:syntax-highlighting' styles \
 #
 
 # Auto set the tab and window titles.
-# zstyle ':prezto:module:terminal' auto-title 'yes'
+zstyle ':prezto:module:terminal' auto-title 'yes'
 
 # Set the window title format.
-# zstyle ':prezto:module:terminal:window-title' format '%n@%m: %s'
+zstyle ':prezto:module:terminal:window-title' format '%n@%m: %s'
 
 # Set the tab title format.
-# zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
+zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
 
 #
 # Tmux
 #
 
 # Auto start a session when Zsh is launched in a local terminal.
-# zstyle ':prezto:module:tmux:auto-start' local 'yes'
+#zstyle ':prezto:module:tmux:auto-start' local 'yes'
 
 # Auto start a session when Zsh is launched in a SSH connection.
 #zstyle ':prezto:module:tmux:auto-start' remote 'yes'
 
 # Integrate with iTerm2.
-zstyle ':prezto:module:tmux:iterm' integrate 'no'
+zstyle ':prezto:module:tmux:iterm' integrate 'yes'

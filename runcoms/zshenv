@@ -5,21 +5,6 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
-dyld_insert() {
-
-  [[ -f "$1" ]] && export DYLD_INSERT_LIBRARIES="$1${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
-  typeset -u DYLD_INSERT_LIBRARIES
-}
-
-# dyld_insert "/Volumes/2T/ServiceData/git/stderred/build/libstderred.dylib"
-# dyld_insert "/usr/local/lib/libRedGreen.dylib"
-
-# export DYLD_PRINT_LIBRARIES=1
-
-# [[ -f ${STDERRRED="/Volumes/2T/ServiceData/git/stderred/build/libstderred.dylib"} ]] &&
-#  export DYLD_INSERT_LIBRARIES="$STDERRRED${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
-
-
 # Ensure that a non-login, non-interactive shell has a defined environment.
 if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"
@@ -32,6 +17,8 @@ fi
 # if  [[ ! "$LD_PRELOAD" == *libstderred.so* ]]; then
 if [ -x /usr/libexec/path_helper ]; then
   eval `/usr/libexec/path_helper -s`
+fi
+
 #   if [[ -f /usr/lib/libstderred.so ]]; then
 #     export LD_PRELOAD="/usr/lib/libstderred.so${LD_PRELOAD:+:$LD_PRELOAD}"
 #   elif [[ -f /usr/lib64/libstderred.so ]]; then
@@ -52,4 +39,51 @@ if [ -x /usr/libexec/path_helper ]; then
 
 # ""/absolute/path/to/build/libstderred.dylib${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
 
-export IPHONE_SIMULATOR_ROOT=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator8.1.sdk
+# export IPHONE_SIMULATOR_ROOT=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator8.1.sdk
+
+
+# NEEDPATHS=(#
+# /xbin
+# /usr/local/bin
+# /usr/local/sbin
+# /opt/theos/bin
+# /opt/iOSOpenDev/bin
+# /usr/libexec
+# /usr/local/share/npm/bin
+# /Library/Developer/CommandLineTools/usr/bin
+# /z/scriptechocolor-git/ScriptEchoColor/bin
+# /usr/local/opt/llvm/bin
+# /z/sshuttle/src
+# /z/cmd-completion-notifier/build/Release/notifycmd.app/Contents/MacOS
+# )
+# for x in $NEEDPATHS; do echo $x; done
+
+# export http_proxy=socks5://localhost:3128 https_proxy=socks5://localhost:3128
+#
+dyld_insert() {
+  [[ -f "$1" ]] && export DYLD_INSERT_LIBRARIES="$1${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
+  typeset -u DYLD_INSERT_LIBRARIES
+}
+
+alias sh=/usr/local/bin/zsh
+
+# dyld_insert "/Volumes/2T/ServiceData/git/stderred/build/libstderred.dylib"
+# dyld_insert "/usr/local/lib/libRedGreen.dylib"
+
+# export DYLD_PRINT_LIBRARIES=1
+
+# [[ -f ${STDERRRED="/Volumes/2T/ServiceData/git/stderred/build/libstderred.dylib"} ]] &&
+#  export DYLD_INSERT_LIBRARIES="$STDERRRED${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
+
+
+# if [[ "$SHLVL" -ne 1 || -o LOGIN && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
+# if [ "$UID" -eq 0 ]; then
+  # source "/Users/localadmin/.zprofile"
+	# d=( )
+	# typeset -U d
+	# for x in  /dotfiles/zprezto/modules/**/functions/[^\_]*
+	# do
+	# 	d+=$(dirname $x)
+	# done
+	# path+=$d
+# fi

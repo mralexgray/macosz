@@ -1,0 +1,15 @@
+
+random () { # generates random word
+
+	[[ "$1" == "name" ]] && WORDORNAME="propernames"  # ask for named by calling `random name`
+
+	perl -e 'open IN, "</usr/share/dict/'${WORDORNAME:-words}'";rand($.) < 1 && ($n=$_) while <IN>;print $n'
+
+}
+
+random "$@"
+
+	# perl -e 'open IN, "</usr/share/dict/propernames";rand($.) < 1 && ($n=$_) while <IN>;print $n'
+	
+# } || [[ "$1" == "word" ]] && {
+	# WORDORNAMEwords

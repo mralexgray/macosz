@@ -67,3 +67,22 @@ for color in {0..255}; do
   BG[$color]="\e[48;5;${color}m"
 done
 unset color{s,} index
+
+ALLFX=(
+bold
+faint
+underline
+fast-blink
+conceal
+gothic
+proportional
+border-rectangle
+underline-or-right
+overline-or-left
+stress
+font-first
+font-third
+font-fifth
+font-seventh
+font-ninth
+)

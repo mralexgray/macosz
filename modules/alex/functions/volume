@@ -1,0 +1,11 @@
+
+
+
+volume() {
+
+  osascript -e "set Volume $1";
+}
+
+volume $1
+
+export -f volume

@@ -1,0 +1,6 @@
+
+joinwith(){
+	perl -e '$s = shift @ARGV; print join($s, @ARGV);' "$@"
+}
+
+joinwith "$@"
