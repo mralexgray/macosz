@@ -5,6 +5,8 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+source ~/.iterm2_shell_integration.`basename $SHELL`
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -18,9 +20,14 @@ bindkey '^[[1;9D' backward-word
 
 setopt extended_glob
 
-source <( dotfiles )
+# dotfiles | while read line; do eval "$line"; done
+# source <($(echo $(dotfiles)))
+OUTFILE=$(mktemp -t dotfiles)
+dotfiles >! $OUTFILE && . $OUTFILE
+#|| rm $OUTFILE
 
-zstyle ':completion:*' verbose yes
+mkfifo
+# zstyle ':completion:*' verbose yes
 
 [ -n "$SSH_CLIENT" ] && PS1="[ssh] $PS1"
 
@@ -288,6 +295,10 @@ sourcing(){
 # . $HOME/dotfiles/shell/sourcery.sh
 # export PATH="/usr/local/narwhal/bin:$PATH"
 
+
+
+
+
 ### Added by the Heroku Toolbelt
 # export PATH="/usr/local/heroku/bin:$PATH"
 
@@ -302,6 +313,8 @@ sourcing(){
 
 # added by travis gem
 # [ -f /Users/localadmin/.travis/travis.sh ] && source /Users/localadmin/.travis/travis.sh
+
+
 
 # ########################################
 # # turn off tracing
