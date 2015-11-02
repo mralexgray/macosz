@@ -5,29 +5,19 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
-source ~/.iterm2_shell_integration.`basename $SHELL`
-
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Customize to your needs...
 
 bindkey -e
 bindkey '^[[1;9C' forward-word
 bindkey '^[[1;9D' backward-word
 
-setopt extended_glob
+# setopt extended_glob
 
-# dotfiles | while read line; do eval "$line"; done
-# source <($(echo $(dotfiles)))
-OUTFILE=$(mktemp -t dotfiles)
-dotfiles >! $OUTFILE && . $OUTFILE
-#|| rm $OUTFILE
-
-mkfifo
-# zstyle ':completion:*' verbose yes
+# export PATH=$PATH:/usr/local/opt/go/libexec/bin
 
 [ -n "$SSH_CLIENT" ] && PS1="[ssh] $PS1"
 
@@ -38,12 +28,7 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 [[ $(uname -n) =~ inux ]] && PLATFORM=linux || \
 [[ $(sw_vers -productName) == "iPhone OS" ]] && PLATFORM=ios || PLATFORM=mac
 
-# ==> Caveats Add the following to your zshrc to access the online help:
-  unalias run-help
-  autoload run-help
-  HELPDIR=/usr/local/share/zsh/help
-  
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PLATFORM
 
 if [[ $PLATFORM =~ mac ]]
 then
@@ -122,8 +107,6 @@ fi
 
 # 
 # export CAPP_BUILD="/cap/cappuccino/Build"
-
-# source /Users/localadmin/.iterm2_shell_integration.zsh
 
 
 : ' PLATFORM LOADER
@@ -295,10 +278,6 @@ sourcing(){
 # . $HOME/dotfiles/shell/sourcery.sh
 # export PATH="/usr/local/narwhal/bin:$PATH"
 
-
-
-
-
 ### Added by the Heroku Toolbelt
 # export PATH="/usr/local/heroku/bin:$PATH"
 
@@ -313,8 +292,6 @@ sourcing(){
 
 # added by travis gem
 # [ -f /Users/localadmin/.travis/travis.sh ] && source /Users/localadmin/.travis/travis.sh
-
-
 
 # ########################################
 # # turn off tracing

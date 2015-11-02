@@ -1,4 +1,7 @@
 # #!/usr/local/bin/zsh
+
+pmodload spectrum
+
 #
 # TEMPLATE=<<EOF
 # #!/usr/local/bin/zsh
@@ -15,7 +18,7 @@
 #
 # newfunction(){
 	
-	echo "$(realpath ${0:h})"
+	echo "$FG[red]$(realpath ${0:h})"
 	
 	[[ $# != 1 ]] && echo "Usage: ${0:t} <function_name>."
 	
