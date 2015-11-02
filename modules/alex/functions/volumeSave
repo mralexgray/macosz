@@ -1,0 +1,6 @@
+
+saveVolume (){ 
+	defaults write com.mrgray.atoz savedVolume -int ${1:-$(volume)}
+}
+
+saveVolume "$@"

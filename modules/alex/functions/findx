@@ -1,0 +1,10 @@
+
+# find using regexes, doi.
+
+# USAGE; findx /where '.*(some|pattern)'
+
+findx () {
+	find "$1" -type f -print | egrep "$2"
+}
+
+findx "$@"

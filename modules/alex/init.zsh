@@ -2,11 +2,28 @@
 # 	My shell shit, translated to a module
 #   Alex Gray <Alex@MrGray.com
 
+<<<<<<< HEAD
 
 # # Load dependencies.
 # pmodload 'helper' 'spectrum'
 #
 # # Correct commands.
+=======
+# Load dependencies.
+pmodload 'helper' 'spectrum'
+
+
+# Return if requirements are not found.
+if (( $+commands[node] )); then
+ ni() { npm install --global --verbose $@; } 
+fi
+
+
+# Source module files.
+# source "${0:h}/alias.zsh"
+
+# Correct commands.
+>>>>>>> Auto-commit message by  Monday, 02 November @ 14:11
 # setopt CORRECT
 #
 # #

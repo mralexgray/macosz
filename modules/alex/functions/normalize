@@ -1,0 +1,13 @@
+normalize()
+
+{
+	MAX=${2:-1}
+	MIN=${3:-0}
+	
+	[[ $(bc <<< "$1 > $MAX") == 1 ]] && { echo $MAX; return; } || [[ $(bc <<< "$1 < $MIN") == 1 ]] && { echo $MIN; return; } || echo $1
+}
+
+
+# normalizes $1 to between 0-1, or if given, up to $2, or down to $3
+
+normalize "$@"

@@ -186,21 +186,21 @@ zstyle ':prezto:module:editor' dot-expansion 'yes'
 #
 
 # Ignore submodules when they are 'dirty', 'untracked', 'all', or 'none'.
-# zstyle ':prezto:module:git:status:ignore' submodules 'dirty'
+zstyle ':prezto:module:git:status:ignore' submodules 'all'
 
 #
 # GNU Utility
 #
 
 # Set the command prefix on non-GNU systems.
-# zstyle ':prezto:module:gnu-utility' prefix 'g'
+zstyle ':prezto:module:gnu-utility' prefix 'g'
 
 #
 # History Substring Search
 #
 
 # Set the query found color.
-zstyle ':prezto:module:history-substring-search:color' found 'red'
+zstyle ':prezto:module:history-substring-search:color' found ''
 
 # Set the query not found color.
 zstyle ':prezto:module:history-substring-search:color' not-found ''

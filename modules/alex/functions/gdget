@@ -1,0 +1,48 @@
+#!/usr/local/bin/zsh
+
+_gdget_last_status(){
+	
+	GET_STATUS="$($SSH tail -n1 $STATUS_FILE 2> /dev/null)"
+	printf "Last run's status:"
+	[[ $GET_STATUS =~ SUCCESS ]] && printf "$FG[green]" || printf "$FG[red]"
+	echo "${GET_STATUS:-Unknown}"
+}
+
+_gdget_check_help() {
+
+	[[ ${#ARGS} < 1 || $ARGS =~ (-h|--help) ]] && {
+		/bin/cat <<-USAGE
+		$(basename $0) - Downloads URL via WGET on remote VPS, then uploads it to google drive!
+		Usage: $(basename $0) <URL> [vpshost]
+		USAGE
+		exit 0
+	}
+}
+
+gdget(){
+
+	# pmodload 'spectrum'
+	
+	SSH=( /usr/local/bin/ssh -o LogLevel=Fatal )
+	[[ $# > 1 ]] && SSH+=$2 || [[ $(ping 10.10.10.1 -c1 2> /dev/null) ]] && ssh+=GW || SSH+=v6www.com
+
+	STATUS_FILE=".$(basename $0)_log_file"
+	ARGS="$@"
+	_gdget_check_help
+	_gdget_last_status
+	
+	echo "Name file? [${BASE=${1##*/}}]"
+	read NAME
+
+	CMD="OK=FAILURE; STATUS_FILE=$STATUS_FILE; GDGETURL=$1 && FILENAME=${NAME:-$BASE} && "
+	CMD+='echo "downloading $GDGETURL to $FILENAME" && '
+	CMD+='/usr/bin/wget $GDGETURL -O $FILENAME && '
+	CMD+='./vps_config/bin/drive-linux-amd64 upload -f $FILENAME && OK=SUCCESS; '
+	CMD+='echo $OK $FILENAME $(date) >>! $STATUS_FILE'
+
+	echo "CONNECTING TO $SSH '$CMD'"
+	$SSH $CMD
+		
+}
+
+gdget "$@"
