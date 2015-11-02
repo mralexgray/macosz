@@ -1,0 +1,21 @@
+
+trs() {
+	
+	set -e
+    local string="$1"
+		echo "string is $string"
+    shift
+    while [ $# -gt 0 ]
+    do
+			echo "argc = $#"
+      # string="$(sed -e \"s/$1/$2/g\" <<< $string)"
+			string=${string/$1/$2/}
+			echo "string is NOW $string"
+      shift 2
+    done
+    printf "$string"
+}
+
+# $ trs '1 2 3' 1 foo '2 3' 'bar baz' -> foo bar baz
+
+trs $@

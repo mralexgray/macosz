@@ -1,0 +1,12 @@
+travis(){
+	
+	# cmd=$(grep [^#].*script .travis.yml | cut -f2 -d":")
+	cmd=$(grep script .travis.yml | grep -v "^\#" | cut -f2 -d":")
+	echo "issuing command ${cmd:=xctool -scheme $(basename $(pwd)) -project $(ls -d -n1 *.xcodeproj) build test}"
+
+	bash -c "$cmd"
+	
+	# grep 'script:' | cut -f2 -d ':' < .travis.yml
+}
+
+travis

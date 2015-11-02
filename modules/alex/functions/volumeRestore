@@ -1,0 +1,6 @@
+
+volumeRestore (){ 
+	[[ -z ${VOL=$(defaults read com.mrgray.atoz savedVolume 2> /dev/null)} ]] && return 1 || volume $VOL 
+}
+
+volumeRestore

@@ -1,0 +1,8 @@
+sayQuietly(){ 
+	volumeSave
+	volume 23
+	say "$@"
+	volumeRestore
+}
+
+sayQuietly "$@"

@@ -1,0 +1,53 @@
+#!/usr/local/bin/zsh
+
+if [[ ! -f $FORGET_DBASE ]]
+then
+	touch $FORGET_DBASE
+	FORBID=( )
+else
+
+	x="$(expr $(date +%s) - $(stat -f %m $FORGET_DBASE))";
+	echo $x;
+	[[ $x -gt $FORGET_AFTER ]] && rm -f $FORGET_DBASE || FORBID=( $(cat $FORGET_DBASE) )
+
+fi
+
+
+
+git-commit-prompt () {
+	
+	[[ -z "$1" ]] && exit 2
+	
+	FUNCS="/dotfiles/zprezto/modules/alex/functions"
+	DIR="$($FUNCS/gitdir $1)"
+	# " || DIR="$(dirname $1)"
+
+	[[ $FORBID =~ $DIR ]] && say skipping ${DIR:t} && exit 0
+	
+	logger "head is $DIR"
+
+	x="$($FUNCS/reponame $DIR)"
+
+	gitcmd='cd $DIR && git status | egrep "^\s.*:.*"'
+
+	gstatus="$(eval $gitcmd)"
+	
+	logger "status: $gstatus"
+
+	[[ "$gstatus" == "" ]] && say "nothing to commit in $x" && exit 1
+
+	dcmd='cocoa-dialog standard-inputbox --label "changed: $(basename $1)
+	
+$gstatus
+" --width 900  --quiet --title "Commit to $x"'
+
+	# res="$(eval $dcmd)"
+	res="$(eval $dcmd)"
+
+	[[ "$res" == "" ]] && say "forbbiding $(basename $DIR)" && FORBID+="$DIR" && echo $FORBID | uniq >! $FORGET_DBASE
+	
+	# git acp "$res" && say "committed to $x repo"
+
+}
+
+git-commit-prompt "$@"

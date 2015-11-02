@@ -10,4 +10,318 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+
+bindkey -e
+bindkey '^[[1;9C' forward-word
+bindkey '^[[1;9D' backward-word
+
+# setopt extended_glob
+
+# export PATH=$PATH:/usr/local/opt/go/libexec/bin
+
+[ -n "$SSH_CLIENT" ] && PS1="[ssh] $PS1"
+
+fpath=(/usr/local/share/zsh-completions $fpath)
+
+# determin platform
+[[ $(uname -n) == 'raspberrypi' ]] && PLATFORM=pi || \
+[[ $(uname -n) =~ inux ]] && PLATFORM=linux || \
+[[ $(sw_vers -productName) == "iPhone OS" ]] && PLATFORM=ios || PLATFORM=mac
+
+export PLATFORM
+
+if [[ $PLATFORM =~ mac ]]
+then
+	# export GOPATH=$HOME/dev/go
+	# export GOROOT=`go env GOROOT`
+	export PATH=$PATH:/usr/local/go/bin
+
+	# Customize to your needs...
+	[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+	: '
+	OUTFILE=$(mktemp -t dotfiles)
+	dotfiles >! $OUTFILE && . $OUTFILE
+	'
+
+	. <( /xbin/dotfiles )
+
+
+	# export PATH=$PATH:/esptools/esp-open-sdk/xtensa-lx106-elf/bin
+	export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+	export NVM_DIR="/sd/localadmin/.nvm"
+	[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+	test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+
+	# ==> Caveats Add the following to your zshrc to access the online help:
+	unalias run-help
+	autoload run-help
+	HELPDIR=/usr/local/share/zsh/help
+
+
+	export PATH=$PATH:${HOME}/Library/Arduino15/packages/esp8266/tools/xtensa-lx106-elf-gcc/*/bin
+fi 
+
+
+
+
+# export AEDebugSends=YES
+# export AEDebugReceives=YES
+
+# dotfiles | while read line; do eval "$line"; done
+# source <($(echo $(dotfiles)))
+#|| rm $OUTFILE
+
+# mkfifo
+# zstyle ':completion:*' verbose yes
+
+
+
+# npm () { /usr/local/bin/npm $@ -d; }
+
+# compdef ping6=ping
+# compdef _gnu_generic curl emacs emacsclient file head mv paste
+# compdef _gnu_generic tail touch scrot shred watch wc zsh
+# compdef _gnu_generic io _ObjC_Tool file head mv tail
+
+# source "$ZDOTDIR/../loader/loader.zsh"
+#source global shit
+# loader_addpath "${SSHHOME:-$HOME}/.sshrc.d"
+# loader_addpath "$ZDOTDIR/../profile"
+# include "profile.global.zsh"
+# include "profile.$PLATFORM.zsh"
+
+
+
+
+# declare -a SRCES FILES
+# for SRC in "${DOTFILES}"/alex/(*.sh|*.zsh); { source $SRC && SRCES+=`basename $SRC` }
+
+# printf "Sourced from $SRCES!"
+
+# . $HOME/dotfiles/shell/sourcery.sh
+#export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+# export NARWHAL_ENGINE=jsc
+# export PATH="/usr/local/narwhal/bin:$PATH"
+
+# 
+# export CAPP_BUILD="/cap/cappuccino/Build"
+
+
+: ' PLATFORM LOADER
+'
+# if [[ -z $SSHRC_LOADED ]]; then
+ # unset SSHRC_LOADED
+  # loader_addpath "${SSHHOME:-$HOME/dotfiles}/.sshrc.d"
+  
+  # SOURCEFROM="${SSHHOME:-$HOME}/.sshrc.d/profile.global"
+  # include SOURCEFROM
+  # [[ -f  ]] && source "$SOURCEFROM" || SOURCEFROM=
+  # source based on platform
+  # [[ -f PLATFORM_SCRIPT="$SOURCEFROM/,,/profile.$PLATFORM" ]] && source "$PLATFORM_SCRIPT" || PLATFORM_SCRIPT="N/A"
+
+  echo "SOURCEFROM:$FG[blue]${SOURCEFROM:-N/A}$FX[none] " \
+          "sshhome:$FG[yellow]${SSHHOME:-UNSET!}$FX[none] " \
+         "platform:$FG[red]${PLATFORM:-UNKNOWN}$FX[none] " \
+          "sourced:$FG[green]$PLATFORM_SCRIPT$FX[none] " 
+
+
+  # echo "SOURCEFROM:$(/xbin/color blue)${SOURCEFROM:-N/A}$(/xbin/color off) sshhome:${SSHHOME:-$(/xbin/color yellow)UNSET!$(/xbin/color off)} platform:${PLATFORM:-$(/xbin/color red)UNKNOWN$(/xbin/color off)}"
+
+  # [[ -z "$SSHHOME" ]]  && export LOADFROM="$(dirname $0)" || export LOADFROM="$SSHHOME/.sshrc.d"
+
+  # export -g SSHRC_LOADED=YES
+  
+# else
+  
+#   PARENT_COMMAND="$(ps -o comm= $PPID)"
+#   echo "trying to load twice, called from $PARENT_COMMAND"
+#
+# fi
+
+
+
+
+# Defines environment variables.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+# declare -a SOURCES
+# DEBUG=1
+# alias PATHCT='echo $PATH | tr ':' '\n' | wc -l'
+
+sourcing(){ 
+
+  # /bin/echo -n "sourcing $@"  | sed 's:/Users/localadmin:~:g'
+  # SOURCES+="$@"
+  # [[ $DEBUG ]] && echo "$(basename $@)"
+  # [[ -L "$@" ]]; {
+  #   local link="$(/usr/bin/readlink $@)"
+  #   SOURCES+="$(echo \[$(/xbin/color cyan)$link$(/xbin/color off)])"
+  #   [[ $DEBUG ]] && echo "$link"
+  # }
+  # . "$@"
+  # echo "path after $(basename $@) ... $(/xbin/color magenta)`PATHCT`$(/xbin/color off)"
+  # typeset -U PATH
+  # export SOURCES
+}
+
+
+# export IPHONE_SIMULATOR_ROOT='/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator8.1.sdk'
+
+
+# # Source this file in your shell to enable stderred for all commands
+# [[ ! "$LD_PRELOAD" == *libstderred.so* ]] && {
+#
+#     [[ -f /usr/lib/libstderred.so ]]   && export LD_PRELOAD="/usr/lib/libstderred.so${LD_PRELOAD:+:$LD_PRELOAD}"\
+# ||  [[ -f /usr/lib64/libstderred.so ]] && export LD_PRELOAD="/usr/lib64/libstderred.so${LD_PRELOAD:+:$LD_PRELOAD}"
+#
+# }
+#
+
+
+# export STDERRED_BLACKLIST="^(bash|test.*)$"
+# ""/absolute/path/to/build/libstderred.dylib${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
+# bold=$(tput bold || tput md)
+# red=$(tput setaf 1)
+# export STDERRED_ESC_CODE=$(echo -e "$bold$red")
+
+
+
+## FROM backup
+
+# # set the trace prompt to include seconds, nanoseconds, script name and line number
+# PS4='+$(date "+%s:%N") %N:%i> '
+# # save file stderr to file descriptor 3 and redirect stderr (including trace
+# # output) to a file with the script's PID as an extension
+# exec 3>&2 2>/tmp/startlog.$$
+# # set options to turn on tracing and expansion of commands contained in the prompt
+# setopt xtrace prompt_subst
+# ##################################################
+ 
+
+# Path to your oh-my-zsh configuration.
+# ZSH=$HOME/.oh-my-zsh
+
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+# ZSH_THEME="mh"
+
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Set to this to use case-sensitive completion
+# CASE_SENSITIVE="false"
+
+# Comment this out to disable bi-weekly auto-update checks
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment to change how often before auto-updates occur? (in days)
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment following line if you want to disable colors in ls
+# DISABLE_LS_COLORS="true"
+
+# Uncomment following line if you want to disable autosetting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment following line if you want to disable command autocorrection
+# DISABLE_CORRECTION="true"
+
+# Uncomment following line if you want red dots to be displayed while waiting for completion
+#COMPLETION_WAITING_DOTS="true"
+
+# Uncomment following line if you want to disable marking untracked files under
+# VCS as dirty. This makes repository status check for large repositories much,
+# much faster.
+#DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# plugins=(
+# textmate
+# colored-man
+# history-substring-search
+# brew
+# # catimg
+# dircycle
+# dirhistory
+# dirpersist
+# gitfast
+# git-extras
+# github
+# nyan
+# osx
+# pod
+# texmate
+# # compleat
+# web-search
+# urltools
+# rand-quote # aka quote
+# )
+# bwana)
+# colorize zsh-syntax-highlighting zsh-output-highlighting brew bwana fbterm github osx pod web-search history-substring-search history npm nyan)
+# autojump colored-man colorize zsh-syntax-highlighting zsh-output-highlighting)
+
+# git textmate brew bwana cloudapp) per-directory-history
+# colorize copydir cp fbterm git-remote-branch github osx per-directory-history pod safe-paste themes web-search)
+
+# . $ZSH/oh-my-zsh.sh
+
 # Customize to your needs...
+# . $HOME/dotfiles/shell/sourcery.sh
+# export PATH="/usr/local/narwhal/bin:$PATH"
+
+### Added by the Heroku Toolbelt
+# export PATH="/usr/local/heroku/bin:$PATH"
+
+# export rvmsudo_secure_path=1
+# . $HOME/dotfiles/shell/sourcery.sh
+
+# bindkey -e
+# bindkey '^[[1;9C' forward-word
+# bindkey '^[[1;9D' backward-word
+
+# PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+# added by travis gem
+# [ -f /Users/localadmin/.travis/travis.sh ] && source /Users/localadmin/.travis/travis.sh
+
+# ########################################
+# # turn off tracing
+# unsetopt xtrace
+# # restore stderr to the value saved in FD 3
+# exec 2>&3 3>&-
+
+
+
+# source /usr/local/Cellar/antigen/1/share/antigen.zsh
+
+## Load the oh-my-zsh's library.
+# antigen use oh-my-zsh
+
+## Bundles from the default repo (robbyrussell's oh-my-zsh).
+#antigen bundle git
+## antigen bundle heroku
+## antigen bundle pip
+## antigen bundle lein
+#antigen bundle command-not-found
+
+## Syntax highlighting bundle.
+#antigen bundle zsh-users/zsh-syntax-highlighting
+
+## antigen bundle Tarrasch/zsh-autoenv
+
+## Load the theme.
+#antigen theme pure
+## robbyrussell
+## antigen theme funky
+
+## Tell antigen that you're done.
+# antigen apply

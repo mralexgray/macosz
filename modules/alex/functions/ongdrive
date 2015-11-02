@@ -1,0 +1,33 @@
+
+existsongdrive () { 
+	CLEANED="$(urlencode <( echo $1 ))"
+	[ $(expr "$(drive list -t $CLEANED | wc -l)") -gt 1 ]
+}
+
+ongdrive() {
+
+  if [ $# -lt 1 ]
+	then
+    echo "USAGE: ongdrive [-l] fileOrFolder [file2] ..."
+    echo "Determines if the file, or ALL the files in the folder are on the gdrive"
+		echo "-l will literally speak if it is!"
+  else
+		CTR=1
+		if [[ -d "$1" ]]; then INFILES=( $(ls $1/**/*(.,/)) ); else INFILES="$@"; fi
+			
+		for x in $INFILES; { 	
+			# GFILE="${x##*/GoogleDrive//}"
+			GFILE="$(basename $x)"
+			if ! existsongdrive "$GFILE"
+			then 
+				>&2 echo "missing file '$GFILE' on 'gdrive'"
+				return -1
+			fi 
+			((CTR++))
+		}
+		>&2 echo "processed $CTR files"
+  fi
+}
+
+ongdrive "$@"
+print func ongdrive is initialized

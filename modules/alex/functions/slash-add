@@ -1,0 +1,18 @@
+
+### Add trailing slash if needed
+
+slash-add (){
+	
+	for STR in $@; do
+		
+		length=${#STR}
+		last_char=${STR:length-1,1}
+
+		[[ $last_char != "/" ]] && STR="$STR/"
+
+		echo "$STR" # => /i/am/a/path/
+		
+	done
+}
+
+slash-add $@

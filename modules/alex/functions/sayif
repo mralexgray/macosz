@@ -1,0 +1,7 @@
+sayif () { 
+
+	DEBUG=${DEBUG:-$(defaults read com.mrgray debug)}
+	[[ $DEBUG == 1 ]] && { set -x; say "$@"; logger "$@"; } || set +x
+}
+
+sayif "$@"

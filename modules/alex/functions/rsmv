@@ -1,0 +1,208 @@
+#!/usr/local/bin/zsh -l
+
+pmodload utility
+# source"${ZDOTDIR:-$HOME}/.zprezto/modules/spectrum/init.zsh"
+
+# zstyle ':prezto:load' pmodule 	'spectrum'
+# RSYNC=/xbin/rsync
+# RSYNC=rsync
+# RSYNC=/usr/bin/rsync
+# RSYNC=/tmp/bombich-rsync/rsync-3.0.7/rsync
+
+# for x in utility spectrum
+# do	source /dotfiles/zprezto/modules/$x/init.zsh
+# done
+
+RSYNC="/apps/Carbon Copy Cloner.app/Contents/MacOS/ccc_helper.app/Contents/MacOS/rsync"
+# --remove-source-files
+# --verbose
+# --human-readable
+# --progress
+#
+# OPTS=(
+# -X
+# -H
+# -p
+# -l
+# -N
+# -rtx
+# --devices
+# --fileflags
+# --force-change
+# --protect-decmpfs
+# --numeric-ids
+# -go
+# --protect-args
+# # --no-inc-recursive
+# )
+# --existing
+# --ignore-existing
+# --update
+# --inplace
+# --archive
+# --checksum
+# --fuzzy
+
+OPTS=(
+--recursive             
+--links    	
+--fileflags             	
+--executability         	
+--acls
+--xattrs	
+--no-specials
+--times                 	
+--crtimes               	
+--super	
+--numeric-ids           	
+--protect-args 
+--stats
+)
+					   
+						 
+rsmv(){
+
+	ARG1="$1"
+	ARG2="$2"
+	
+	# [[ -d "$ARG1" && ! "$ARG1" =~ ".*\/$" ]] && ARG1+="/"
+	# [[ "$ARG1" =~ ".*\/$" ]] && 
+	ARG2+="/$(basename $1)"
+	# [[ -d "$1" && ! -d "$ARG2" ]] && echo "making dir: $ARG2" && mkdir "$ARG2"
+	
+	echo "$FG[orange]arg1: $ARG1\n$FG[magenta]arg2: $ARG2$FX[none]"
+
+	# $RSYNC-az
+	echo "$BG[red]"
+	dut "$ARG1" 
+	echo "$BG[blue]"
+	dut "$ARG2"
+	echo "$FX[none]"
+		
+	# time ditto -V
+	$RSYNC $OPTS "$ARG1" "$ARG2"
+	# $OPTS 
+		
+	[[ "$?" == "0" ]] && { 
+					echo "$FG[green]synced $ARG1 to $ARG2 ... $FX[blink]removing!$FX[none]" # && rm -r "$ARG1" 
+		} || 	echo "$FG[red]rsync failed, not deleting $FG[yellow][$ARG1]!$FX[none]"
+}
+
+rsmv "$@"
+
+	# [[ -d "$1" && "${ARG1[${#ARG1}-1]}" != "/" ]] && ARG1+="/"
+	# [[ -d "$1" && "${ARG1[${#ARG1}-1]}" != "/" ]] && ARG1+="/"
+
+
+
+	
+	# declare -a ARG1
+	# while [[ $# > 1 ]]
+	# do
+	# 	ARG1+="$1"
+	# 	shift
+	# done
+
+	
+	# for z in $ARG1
+	# do
+			# local ARG2="$1"
+			# [[ -d "$z" && "${ARG2[${#ARG2}-1]}" != "/" ]] && ARG2+="/"
+			# [[ -d "$z" && -z "$ARG2" ]] && echo "making dir: $ARG2" && mkdir "$ARG2"
+
+
+# -X -H -p -l -N -rtx \
+# 						--devices \
+# 						--fileflags \
+# 						--force-change \
+# 						--protect-decmpfs \
+# 						--numeric-ids -go \
+# 						--from0 \
+# 						--delete-during \
+# 						--protect-args \
+# 						--no-inc-recursive \
+					   
+
+															# \					# --sender-uid=0
+# --dest-file-owner=501 \
+# $RSYNC -vaAEHSWX "$ARG1" "$ARG2"
+
+# --filter= <<< echo $FILTER
+						# /Volumes/Bay3.2_2000_2T/Downloads.2T/cling-MacOSX-10.9-628618f2b9/
+						# /Volumes/5T/Downloads/cling-MacOSX-10.9-628618f2b9
+	
+	# "rsync -aP --remove-source-files";
+	# /tmp/bombich-rsync/rsync-3.0.7/rsync -vaAEHSWX --progress "$1" "$2"
+	
+
+
+# ._/var/folders/zz/zyxvpxvq6csfxvn_n0000000000000/T/com.bombich.ccc_filter.qo7eBe
+
+
+
+# --del                   an alias for --delete-during
+# --delete                delete extraneous files from destination dirs
+# --delete-before         receiver deletes before transfer, not during
+# --delete-during         receiver deletes during transfer (default)
+# --delete-delay          find deletions during, delete after
+# --delete-after          receiver deletes after transfer, not during
+# --delete-excluded       also delete excluded files from destination dirs
+# --ignore-errors         delete even if there are I/O errors
+# --force-delete          force deletion of directories even if not empty
+# --force-change          affect user-/system-immutable files/dirs
+# --force-uchange         affect user-immutable files/dirs
+# --force-schange         affect system-immutable files/dirs
+# --max-delete=NUM        don't delete more than NUM files
+# --max-size=SIZE         don't transfer any file larger than SIZE
+# --min-size=SIZE         don't transfer any file smaller than SIZE
+# --partial               keep partially transferred files
+# --partial-dir=DIR       put a partially transferred file into DIR
+# --delay-updates         put all updated files into place at transfer's end
+# -m, --prune-empty-dirs      prune empty directory chains from the file-list
+# --timeout=SECONDS       set I/O timeout in seconds
+# --contimeout=SECONDS    set daemon connection timeout in seconds
+# -I,--ignore-times          don't skip files that match in size and mod-time
+# --size-only             skip files that match in size
+# --modify-window=NUM     compare mod-times with reduced accuracy
+# -T, --temp-dir=DIR          create temporary files in directory DIR
+# --compare-dest=DIR      also compare destination files relative to DIR
+# --copy-dest=DIR         ... and include copies of unchanged files
+# --link-dest=DIR         hardlink to files in DIR when unchanged
+# -z, --compress              compress file data during the transfer
+# --compress-level=NUM    explicitly set compression level
+# --skip-compress=LIST    skip compressing files with a suffix in LIST
+# -C, --cvs-exclude           auto-ignore files the same way CVS does
+# -f, --filter=RULE           add a file-filtering RULE
+# -F                          same as --filter='dir-merge /.rsync-filter'
+#                      repeated: --filter='- .rsync-filter'
+#      --exclude=PATTERN       exclude files matching PATTERN
+#      --exclude-from=FILE     read exclude patterns from FILE
+#      --include=PATTERN       don't exclude files matching PATTERN
+#      --include-from=FILE     read include patterns from FILE
+#      --files-from=FILE       read list of source-file names from FILE
+#  # -0, --from0                 all *-from/filter files are delimited by 0s
+
+
+# skip based on checksum, not mod-time & size 
+#equals  -rlptgoD (no -H,-A,-X)
+
+# skip files that are newer on the receiver
+# update destination files in-place (SEE MAN PAGE)
+# copy symlinks as symlinks
+# preserve file-flags (aka chflags)
+# preserve the file's executability
+# preserve extended attributes
+# preserve modification times
+# preserve create times (newness)
+# receiver attempts super-user activities
+# skip creating new files on receiver
+# skip updating files that already exist on receiver
+# sender removes synchronized files (non-dirs)
+# don't map uid/gid values by user/group name
+# find similar file for basis if no dest file
+# no space-splitting; only wildcard special-chars
+# give some file-transfer stats
+
+
+FILTER="# Internal filtersH /_CCC*P /_CCC*H /.com.bombich.ccc.start_timeP /.com.bombich.ccc.start_time# Global filtersH .AppleDoubleP .AppleDoubleH .AppleDBP .AppleDBH .afpDeleted*P .afpDeleted*H .SynologyWorkingDirectoryP .SynologyWorkingDirectoryH .DocumentRevisions-V100*P .DocumentRevisions-V100*H .Trash/H /.HFS+ Private Directory Data*P /.HFS+ Private Directory Data*H /.MobileBackups/P /.MobileBackups/H /.MobileBackups.trash/P /.MobileBackups.trash/H Library/Mobile Documents.*P Library/Mobile Documents.*H .Spotlight-V100/P .Spotlight-V100/H /.Trashes/P /.Trashes/H /.VolumeIcon.icnsP /.VolumeIcon.icnsH /.bzvolP /.bzvolH /.com.apple.NetBootX/P /.com.apple.NetBootX/H /.com.apple.timemachine.donotpresentP /.com.apple.timemachine.donotpresentH /.fileflags_compatP /.fileflags_compatH /.fseventsdP /.fseventsdH /.hotfiles.btreeP /.hotfiles.btreeH /.journalP /.journalH /.journal_info_blockP /.journal_info_blockH /.metadata_never_indexP /.metadata_never_indexH /.metadata_never_index_unless_rootfsP /.metadata_never_index_unless_rootfsH /.reenable_spotlightP /.reenable_spotlightH /.vol/*P /.vol/*H .webtmpH Backups.backupdb/P Backups.backupdb/H /Library/Caches/CrashPlanH /Library/NetBoot/.clientsH /Library/NetBoot/.sharepointH /Library/Application Support/Comodo/AntiVirus/QuarantineP /Library/Application Support/Comodo/AntiVirus/QuarantineH Network Trash Folder/P Network Trash Folder/H /PGPWDE01P /PGPWDE01H /PGPWDE02P /PGPWDE02H /System/Library/CoreServices/.disk_label*P /System/Library/CoreServices/.disk_label*H /System/Library/Caches/com.apple.bootstampsP /System/Library/Caches/com.apple.bootstampsH /System/Library/Caches/com.apple.corestorageP /System/Library/Caches/com.apple.corestorageH /System/Library/Caches/com.apple.coresymbolicationdP /System/Library/Caches/com.apple.coresymbolicationdH /System/Library/Caches/com.apple.kext.cachesP /System/Library/Caches/com.apple.kext.cachesH TheVolumeSettingsFolderP TheVolumeSettingsFolderH /Volumes/*P /Volumes/*H /automount/P /automount/H /cores/H /lost+foundH /private/tmp/*H /private/tmp/kacta.txtP /private/tmp/kacta.txtH /private/tmp/kactd.txtP /private/tmp/kactd.txtH /private/var/db/dyld/dyld_*P /private/var/db/dyld/dyld_*H /private/var/folders/zz/*H /private/var/vm/*H Saved Application StateH /private/var/db/systemstatsH /private/var/spool/qmasterH Library/Preferences/ByHost/com.apple.loginwindow*H $Recycle.Bin"
+

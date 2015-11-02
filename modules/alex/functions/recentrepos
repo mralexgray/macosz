@@ -1,0 +1,39 @@
+#!/usr/bin/env zsh
+
+# canonical(){
+# 	cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)/$(basename -- "$0")"
+# }
+
+# export REPOS
+
+recentrepos(){
+	
+	# env | sort
+	
+	# echo my dir is $(grealpath ${0:h})
+	# echo $(grealpath $0)
+	# ${$(which recentrepos):h}
+	# ${0:a:h}
+	gdir=$(ls /dotfiles/zprezto/**/gitdir(*))
+	# echo "gdir $gdir"
+	
+	declare -a dirs
+	for x in $(mdfind 'kMDItemLastUsedDate>$time.now(-500000)' -onlyin /sd | grep -v localadmin)
+	do
+		dirs+="$($gdir $x 2> /dev/null)"
+	done
+	
+	typeset -U dirs
+	
+	dirs=( ${${dirs/\/Volumes\/Bay3.2_2000_2T\/ServiceData/\/sd}/\/sd\/GoogleDrive/\/gd} )
+	
+	# echo "çj.\n.)dirs}"
+	# printf "%s" "${(j.
+# .)dirs}"
+
+	echo $dirs;
+	
+	# export REPOS="$(echo ${(j.|.)dirs})"
+}
+
+recentrepos 

@@ -1,0 +1,19 @@
+
+### Remove trailing slash if given
+
+slash-remove (){
+	
+	for STR in $@; do
+
+		length=${#STR}
+		last_char=${STR:length-1:1}
+
+		[[ $last_char == "/" ]] && STR=${STR:0:length-1}; :
+
+		echo "$STR" # => /i/am/a/path
+		
+	done
+}
+
+slash-remove "$@"
+

@@ -1,0 +1,10 @@
+
+volume() {
+
+	[[ $1 ]] && osascript -e "set volume output volume $(normalize $1 100)" \
+					 || osascript -e 'output volume of (get volume settings)' # get
+}
+
+# get (no argument) or set volume (1 argument)
+
+volume "$@"
